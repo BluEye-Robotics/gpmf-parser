@@ -10,6 +10,6 @@ project (gpmf-parser)
 set(CMAKE_SUPPRESS_REGENERATION true)
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
 
-file(GLOB SOURCES GPMF_parser.c "emscripten-expose/*.c" "demo/GPMF_mp4reader.c demo/GPMF_print.c")
+file(GLOB SOURCES GPMF_parser.c demo/GPMF_mp4reader.c demo/GPMF_print.c "emscripten-expose/*.c")
 
 add_executable(gpmf-parser ${SOURCES})
