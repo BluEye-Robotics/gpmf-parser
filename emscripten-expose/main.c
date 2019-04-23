@@ -1,4 +1,6 @@
+#ifdef __EMSCRIPTEN__
 #include <emscripten/emscripten.h>
+#endif
 
 #include <stdint.h> 
 #include <stddef.h> 
@@ -15,7 +17,11 @@ int main(int argc, char ** argv)
   printf("Hello World\n");
 }
 
-void EMSCRIPTEN_KEEPALIVE myFunction(int argc, char ** argv)
+void
+#ifdef __EMSCRIPTEN__
+EMSCRIPTEN_KEEPALIVE
+#endif
+myFunction(int argc, char ** argv)
 {
   printf("MyFunction Called\n");
 	//size_t mp4 = OpenMP4Source("tmp", MOV_GPMF_TRAK_TYPE, MOV_GPMF_TRAK_SUBTYPE);
