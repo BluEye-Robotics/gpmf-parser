@@ -38,12 +38,7 @@
     <script>
     document.querySelector('.mybutton')
     .addEventListener('click', function() {
-        var result = Module.ccall(
-            'myFunction', // name of C function 
-            null, // return type
-            null, // argument types
-            null  // arguments
-        );
+        var result = _myFunction(null, null);
     });
     </script>
   </body>
