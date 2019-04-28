@@ -13,45 +13,50 @@
       <label for="load-file">Load a file:</label>
       <input type="file" id="load">
     </div>
+    <!--<script async src=build/gpmf-parser.js></script>-->
     <script type='text/javascript'>
-      var Module = {
-        preRun: [],
-        postRun: [],
-        print: (function() {
-          return function(text) {
-            if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
-            // These replacements are necessary if you render to raw HTML
-            //text = text.replace(/&/g, "&amp;");
-            //text = text.replace(/</g, "&lt;");
-            //text = text.replace(/>/g, "&gt;");
-            //text = text.replace('\n', '<br>', 'g');
-            console.log(text);
-          };
-        })(),
-        printErr: function(text) {
-          if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
-          console.error(text);
-        },
-        totalDependencies: 0,
-        monitorRunDependencies: function(left) {
-          this.totalDependencies = Math.max(this.totalDependencies, left);
+      var worker = new Worker("build/gpmf-parser.js");
+      var buffer = [];
+      worker.onmessage = function(event) {
+        if (event.data.channel === "stdout") {
+          console.log(event.data.line);
+        } else {
+          if (event.data.trace) event.data.trace.split("\n").map(function(v) { console.error(v); });
+          if (event.data.line) {
+            console.error(event.data.line);
+          } else {
+            var v = event.data.char;
+            if (v == 10) {
+              var line = buffer.splice(0);
+              console.error(line = line.map(function(charCode){return String.fromCharCode(charCode);}).join(''));
+            } else {
+              buffer.push(v);
+            }
+          }
         }
       };
     </script>
-    <script async src=build/gpmf-parser.js></script>
     <button class="mybutton">Run myFunction</button>
     <script>
     document.querySelector('.mybutton')
     .addEventListener('click', function() {
 
-        const f = document.getElementById('load').files[0];
+        const files = document.getElementById('load').files;
 
+        //FS.mkdir('/working');
+        //FS.mount(WORKERFS, {
+        //  files: files, // Array of File objects or FileList
+        //}, '/working');
+
+        var result = _myFunction(null, null);
+
+        const f = document.getElementById('load').files[0];
         var reader = new FileReader();
         reader.onload = function(e){
-          console.log(reader.result);
-          var result = _myFunction(null, null);
+          //console.log(reader.result);
+          //var result = _myFunction(null, null);
         }
-        reader.readAsArrayBuffer(f);
+        reader.readAsDataURL(f);
     });
     </script>
   </body>
