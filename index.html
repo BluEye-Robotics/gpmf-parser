@@ -41,6 +41,7 @@
           var buf = Module._malloc(n_bytes);
           Module.HEAPU8.set(bytes, buf);
           var result = _myFunction(buf, n_bytes);
+          
           Module._free(buf);
         }
         reader.readAsArrayBuffer(f);

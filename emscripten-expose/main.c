@@ -50,7 +50,7 @@ EMSCRIPTEN_KEEPALIVE
 myFunction(char *buf, int length)
 {
   printf("MyFunction Called\n");
-  printf("%d, %d\n", buf, length);
+  printf("%s, %d\n", buf, length);
   //for (int i = 0; i < 10; ++i)
   //  printf("%02x", buf[i]);
   //printf("\n");

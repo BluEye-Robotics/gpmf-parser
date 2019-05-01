@@ -2,7 +2,7 @@
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_TOOLCHAIN_FILE emscripten-expose/Emscripten.cmake)
 #set(CMAKE_C_FLAGS "-O3 -s WASM=1 -s FORCE_FILESYSTEM=1")
-set(CMAKE_C_FLAGS "-O3 -s WASM=1 -s ASSERTIONS=1 -s TOTAL_MEMORY=67108864 --pre-js ../pre.js")
+set(CMAKE_C_FLAGS "-O3 -s WASM=1 -s ASSERTIONS=1 -s ALLOW_MEMORY_GROWTH=1 --pre-js ../pre.js")
 
 # CMakeLists.txt
 cmake_minimum_required (VERSION 3.8.2)
